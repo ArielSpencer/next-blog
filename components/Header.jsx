@@ -1,54 +1,34 @@
 import React from "react";
 import Link from "next/link";
-import { GoArrowRight } from "react-icons/go";
+import { CiCoffeeCup } from "react-icons/ci";
 
 const Header = () => {
   return (
-    <div className="p-5 md:px-12 lg:px-28">
-      <div className="flex justify-between items-center">
+    <section>
+      <div className="bg-primary flex justify-between items-center p-8 md:px-16 lg:px-24">
         <Link
           href="/"
         >
           <h2
-            className="text-2xl sm:text-4xl font-semibold"
+            className="text-2xl sm:text-4xl font-normal text-writingLight hover:text-background cursor-pointer"
           >
-            Ariel Spencer
+            <span className="font-alternative font-medium italic">A</span>riel <span className="font-alternative font-medium">S</span>pencer
           </h2>
         </Link>
-        <button
-          className="bg-white flex items-center gap-2 font-medium py-1 px-3 sm:py-3 sm:px-6 border border-solid border-black shadow-[-7px_7px_0px_#000000] rounded-full"
+
+        <Link
+          href="http://wa.me/5511991007079"
+          target="_blank"
         >
-          Contato
-          <GoArrowRight />
-        </button>
-      </div>
-      <div
-        className="text-center my-8"
-      >
-        <h1
-          className="text-3xl sm:text-5xl font-medium"
-        >
-          Posts Recentes
-        </h1>
-        <p
-          className="mt-10 max-w-[740px] mx-auto text-xs sm:text-base"
-        >
-          Explore artigos e tutoriais sobre programação, UX design e SEO. Aprenda dicas práticas, melhores práticas e tendências do mundo tech por Ariel Spencer.
-        </p>
-        <form
-          className="bg-white flex justify-between max-w-[600px] scale-75 sm:scale-100 mx-auto mt-10 border border-black shadow-[-7px_7px_0px_#000000] rounded-full"
-          action=""
-        >
-          <input type="email" placeholder="Digite seu e-mail e receba nossa newsletter" className="pl-8 outline-none rounded-full flex-grow w-full" />
           <button
-            type="submit"
-            className="border-l border-black p-4 active:bg-gray-600 active:text-white w-[30%]"
+            className="bg-background hover:bg-secondary hover:text-writingLight flex items-center gap-2 font-semibold py-1 px-3 sm:py-3 sm:px-6 border-2 border-solid border-writingDark shadow-[-4px_4px_0px_#161616] rounded-full"
           >
-            Inscreva-se
+            Contato
+            <CiCoffeeCup className="text-2xl" />
           </button>
-        </form>
+        </Link>
       </div>
-    </div>
+    </section>
   )
 }
 
