@@ -1,6 +1,5 @@
-import { assets } from "@/assets/assets";
-import Image from "next/image";
 import Link from "next/link";
+import Logo from "./Logo";
 import { AiFillGithub, AiFillInstagram, AiFillLinkedin } from "react-icons/ai";
 import { IoLogoWhatsapp } from "react-icons/io";
 
@@ -9,18 +8,7 @@ import { IoLogoWhatsapp } from "react-icons/io";
 const Footer = () => {
   return (
     <div className="flex justify-around flex-col gap-2 sm:gap-0 sm:flex-row bg-black py-5 items-center">
-      <Link
-        href="/"
-      >
-        <h2
-          className="text-2xl sm:text-4xl text-writingLight hover:text-background font-alternative font-medium italic cursor-pointer"
-        >
-          A
-          <span className="font-alternative font-medium not-italic">
-            S
-          </span>
-        </h2>
-      </Link>
+      <Logo variant="icon" />
       <p
         className="text-md text-white"
       >
