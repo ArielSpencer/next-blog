@@ -1,7 +1,6 @@
 import { Geist, Geist_Mono, Spectral, Quicksand } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import RootLayoutClient from "./RootLayoutClient";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,12 +19,11 @@ const spectralFont = Spectral({
   style: ["normal", "italic"],
 });
 
-// Importando a fonte Quicksand
 const quicksandFont = Quicksand({
   variable: "--font-quicksand",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"], // Definindo pesos disponíveis
-  style: ["normal"], // Quicksand não possui versão itálica
+  weight: ["300", "400", "500", "600", "700"],
+  style: ["normal"],
 });
 
 export const metadata = {
@@ -40,9 +38,7 @@ export default function RootLayout({ children }) {
       <body
         className={`bg-background font-primary text-writingDark tracking-wider font-medium ${geistSans.variable} ${geistMono.variable} ${spectralFont.variable} ${quicksandFont.variable} antialiased`}
       >
-        <Header />
-        {children}
-        <Footer />
+        <RootLayoutClient>{children}</RootLayoutClient>
       </body>
     </html>
   );
