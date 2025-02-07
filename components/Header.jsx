@@ -1,20 +1,13 @@
 import React from "react";
 import Link from "next/link";
 import { CiCoffeeCup } from "react-icons/ci";
+import Logo from "./Logo";
 
 const Header = () => {
   return (
     <section>
       <div className="bg-primary flex justify-between items-center p-8 md:px-16 lg:px-24">
-        <Link
-          href="/"
-        >
-          <h2
-            className="text-2xl sm:text-4xl font-normal text-writingLight hover:text-background cursor-pointer"
-          >
-            <span className="font-alternative font-medium italic">A</span>riel <span className="font-alternative font-medium">S</span>pencer
-          </h2>
-        </Link>
+        <Logo />
 
         <Link
           href="http://wa.me/5511991007079"
