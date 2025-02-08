@@ -22,7 +22,7 @@ export async function POST(request) {
   const buffer = Buffer.from(imageByteData);
   const path = `public/images/${timestamp}-${image.name}`;
   await writeFile(path, buffer);
-  const imgUrl = `/${timestamp}-${image.name}`;
+  const imgUrl = `/images/${timestamp}-${image.name}`;
 
   const blogData = {
     title: `${formData.get("title")}`,
@@ -38,5 +38,5 @@ export async function POST(request) {
   await BlogModel.create(blogData);
   console.log("Blog Created");
 
-  return NextResponse.json({ success: true, message: "Blog Added" })
+  return NextResponse.json({ success: true, message: "Post Adicionado" })
 }
