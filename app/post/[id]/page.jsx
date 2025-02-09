@@ -7,6 +7,7 @@ import Link from "next/link";
 import { FaLinkedin, FaSquareFacebook, FaWhatsapp, FaXTwitter } from "react-icons/fa6";
 import { LiaLongArrowAltRightSolid, LiaLongArrowAltLeftSolid } from "react-icons/lia";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Page = ({ params: paramsPromise }) => {
   const params = use(paramsPromise);
@@ -16,14 +17,20 @@ const Page = ({ params: paramsPromise }) => {
   const previousPost = currentIndex > 0 ? blog_data[currentIndex - 1] : null;
   const nextPost = currentIndex < blog_data.length - 1 ? blog_data[currentIndex + 1] : null;
 
-  const fetchBlogData = () => {
-    for (let i = 0; i < blog_data.length; i++) {
-      if (Number(params.id) === blog_data[i].id) {
-        setData(blog_data[i]);
-        break;
+  useEffect(() => {
+    const fetchBlogData = async () => {
+      try {
+        const response = await axios.get(`/api/blog?id=${params.id}`);
+        setData(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar post:", error);
       }
+    };
+
+    if (params?.id) {
+      fetchBlogData();
     }
-  };
+  }, [params]);
 
   useEffect(() => {
     if (params?.id) {
@@ -53,22 +60,23 @@ const Page = ({ params: paramsPromise }) => {
       </section>
       <section className="mx-5 max-w-[800px] md:mx-auto mt-[-100px] mb-10">
         <Image
-          className="border-4 border-white"
+          className="border-4 border-writingLight"
           src={data.image}
           width={1280}
           height={720}
-          alt=" "
+          alt={data.alt}
+          priority
         />
 
         <div className="flex flex-row items-center justify-center mx-auto gap-4 my-8">
           <Image
-            className="border border-white rounded-full"
-            src={data.author_img}
+            className="border border-writingLight rounded-full"
+            src={data.authorImg}
             width={36}
             height={36}
-            alt="author"
+            alt={data.author}
           />
-          <p>Por: {data.author} | Tempo de leitura: {data.time}</p>
+          <p>Por: {data.author} | Tempo de leitura: {data.readingTime} minutos</p>
         </div>
 
         <h1 className="my-8 text-[28px] font-semibold">Introdução:</h1>
@@ -78,7 +86,7 @@ const Page = ({ params: paramsPromise }) => {
         <p className="my-3 whitespace-pre-line">{data.content}</p>
 
         <div className="mt-12 mb-24">
-          <p className="text-black font font-semibold my-4">
+          <p className="text-writingDark font-semibold my-4">
             Compartilhe esse post nas redes sociais:
           </p>
           <div className="flex space-x-4 text-2xl">
