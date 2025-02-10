@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono, Spectral, Quicksand } from "next/font/google";
 import "./globals.css";
 import RootLayoutClient from "./RootLayoutClient";
+import { Providers } from "./providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,7 +39,11 @@ export default function RootLayout({ children }) {
       <body
         className={`bg-background font-primary text-writingDark tracking-wider font-medium ${geistSans.variable} ${geistMono.variable} ${spectralFont.variable} ${quicksandFont.variable} antialiased`}
       >
-        <RootLayoutClient>{children}</RootLayoutClient>
+        <Providers>
+          <RootLayoutClient>
+            {children}
+          </RootLayoutClient>
+        </Providers>
       </body>
     </html>
   );
