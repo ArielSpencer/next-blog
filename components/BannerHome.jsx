@@ -2,7 +2,7 @@ const BannerHome = () => {
   return (
     <section>
       <div
-        className="text-center my-8"
+        className="text-center my-20"
       >
         <h1
           className="text-3xl sm:text-5xl font-alternative font-extralight italic"
