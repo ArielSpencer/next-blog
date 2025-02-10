@@ -17,7 +17,7 @@ const Sidebar = () => {
     <div className="bg-secondary flex flex-col fixed h-screen w-80 border-r border-writingDark">
       <Link
         href="/"
-        className="px-2 sm:pl-14 py-3 h-[70px] border-b border-writingDark">
+        className="px-2 sm:pl-14 py-3 h-[70px] border-b border-writingDark cursor-pointer">
         <Logo color="light" />
       </Link>
       <div className="w-28 w-80 h-full relative py-12">

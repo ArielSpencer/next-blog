@@ -7,7 +7,9 @@ const Header = () => {
   return (
     <section>
       <div className="bg-primary flex justify-between items-center p-8 md:px-16 lg:px-24">
-        <Logo />
+        <Link href="/" className="cursor-pointer">
+          <Logo />
+        </Link>
 
         <Link
           href="http://wa.me/5511991007079"
