@@ -132,7 +132,7 @@ const page = () => {
         <p className="text-xl mt-4">
           Conteúdo:
         </p>
-        <textarea name="content" onChange={onChangeHandler} value={data.content} className="w-full sm:w-[500px] mt-4 p-4 border rounded-md" type="text" placeholder="Escreva o conteúdo" minLength={70} maxLength={160} rows={10} required />
+        <textarea name="content" onChange={onChangeHandler} value={data.content} className="w-full sm:w-[500px] mt-4 p-4 border rounded-md" type="text" placeholder="Escreva o conteúdo" minLength={300} rows={10} required />
 
         <br />
         <button type="submit" className="bg-secondary w-40 h-12 mt-8 text-writingLight">
