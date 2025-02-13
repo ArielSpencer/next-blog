@@ -11,6 +11,7 @@ import { FiList } from "react-icons/fi";
 import { FiMail } from "react-icons/fi";
 import { RiLogoutCircleLine } from "react-icons/ri";
 import { MdOutlineCloudUpload } from "react-icons/md";
+import { MdOutlinePermMedia } from "react-icons/md";
 
 
 const Sidebar = () => {
@@ -41,6 +42,12 @@ const Sidebar = () => {
             className="flex items-center border border-writingDark gap-3 font-medium pl-4 py-3 bg-white shadow-[-5px_5px_0px_#000000] rounded-full">
             <FiList />
             <p>Todos os posts</p>
+          </Link>
+          <Link
+            href="/admin/media"
+            className="flex items-center border border-writingDark gap-3 font-medium pl-4 py-3 bg-white shadow-[-5px_5px_0px_#000000] rounded-full">
+            <MdOutlinePermMedia />
+            <p>Imagens</p>
           </Link>
           <Link
             href="/admin/subscription"
