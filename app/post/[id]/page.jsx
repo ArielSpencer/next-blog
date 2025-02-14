@@ -1,47 +1,45 @@
 "use client";
 
-import { use } from "react";
-import { assets, blog_data } from "@/assets/assets";
+import { useEffect, useState, use } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaLinkedin, FaSquareFacebook, FaWhatsapp, FaXTwitter } from "react-icons/fa6";
 import { LiaLongArrowAltRightSolid, LiaLongArrowAltLeftSolid } from "react-icons/lia";
-import { useEffect, useState } from "react";
 import axios from "axios";
 
-const Page = ({ params: paramsPromise }) => {
-  const params = use(paramsPromise);
+const Page = ({ params }) => {
+  const unwrappedParams = use(params);
   const [data, setData] = useState(null);
-
-  const currentIndex = blog_data.findIndex(post => post.id === Number(params.id));
-  const previousPost = currentIndex > 0 ? blog_data[currentIndex - 1] : null;
-  const nextPost = currentIndex < blog_data.length - 1 ? blog_data[currentIndex + 1] : null;
+  const [previousPost, setPreviousPost] = useState(null);
+  const [nextPost, setNextPost] = useState(null);
 
   useEffect(() => {
     const fetchBlogData = async () => {
       try {
-        const response = await axios.get(`/api/blog?id=${params.id}`);
+        const response = await axios.get(`/api/blog?id=${unwrappedParams.id}`);
         setData(response.data);
+
+        const allPostsResponse = await axios.get("/api/blog");
+        const allPosts = allPostsResponse.data.blogs;
+        const currentIndex = allPosts.findIndex(post => post._id === unwrappedParams.id);
+
+        if (currentIndex > 0) {
+          setPreviousPost(allPosts[currentIndex - 1]);
+        }
+        if (currentIndex < allPosts.length - 1) {
+          setNextPost(allPosts[currentIndex + 1]);
+        }
       } catch (error) {
         console.error("Erro ao buscar post:", error);
       }
     };
 
-    if (params?.id) {
+    if (unwrappedParams?.id) {
       fetchBlogData();
     }
-  }, [params]);
+  }, [unwrappedParams]);
 
-  useEffect(() => {
-    if (params?.id) {
-      const foundPost = blog_data.find((post) => Number(post.id) === Number(params.id));
-      if (foundPost) {
-        setData(foundPost);
-      }
-    }
-  }, [params]);
-
-  const shareUrl = `https://blog.arielspencer.com/post/${params.id}`;
+  const shareUrl = `https://blog.arielspencer.com/post/${unwrappedParams.id}`;
   const title = data ? `Confira esse post incrível! ${data.title}` : "Confira esse post incrível!";
 
   return data ? (
@@ -51,9 +49,7 @@ const Page = ({ params: paramsPromise }) => {
           <h1 className="text-2xl sm:text-4xl font-semibold max-w-[700px] mx-auto ">
             {data.title}
           </h1>
-          <p
-            className="max-w-[740px] mx-auto text-xl pt-8 pb-12"
-          >
+          <p className="max-w-[740px] mx-auto text-xl pt-8 pb-12">
             {data.description}
           </p>
         </div>
@@ -124,7 +120,7 @@ const Page = ({ params: paramsPromise }) => {
         <div className="flex flex-col gap-8 justify-between items-center mt-12 mb-20 font-semibold">
           {previousPost && (
             <Link
-              href={`/post/${previousPost.id}`}
+              href={`/post/${previousPost._id}`}
               className="flex items-center gap-2 text-primary hover:underline"
             >
               <LiaLongArrowAltLeftSolid size={24} />
@@ -134,7 +130,7 @@ const Page = ({ params: paramsPromise }) => {
 
           {nextPost && (
             <Link
-              href={`/post/${nextPost.id}`}
+              href={`/post/${nextPost._id}`}
               className="flex items-center gap-2 text-primary hover:underline"
             >
               <span>{nextPost.title}</span>
