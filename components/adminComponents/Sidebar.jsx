@@ -10,7 +10,6 @@ import { FiPlusCircle } from "react-icons/fi";
 import { FiList } from "react-icons/fi";
 import { FiMail } from "react-icons/fi";
 import { RiLogoutCircleLine } from "react-icons/ri";
-import { MdOutlineCloudUpload } from "react-icons/md";
 import { MdOutlinePermMedia } from "react-icons/md";
 
 
@@ -55,12 +54,7 @@ const Sidebar = () => {
             <FiMail />
             <p>Subscription</p>
           </Link>
-          <Link
-            href="/admin/testUploadImage"
-            className="flex items-center border border-writingDark gap-3 font-medium pl-4 py-3 bg-white shadow-[-5px_5px_0px_#000000] rounded-full">
-            <MdOutlineCloudUpload />
-            <p>Teste de Upload R2</p>
-          </Link>
+
           <button
             onClick={() => signOut()}
             className="flex items-center border border-writingDark gap-3 font-medium pl-4 py-3 bg-white shadow-[-5px_5px_0px_#000000] rounded-full"
