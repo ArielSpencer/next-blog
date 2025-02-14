@@ -3,11 +3,12 @@
 import axios from "axios";
 import Image from "next/image";
 import { useState } from "react";
-import { LuImagePlus } from "react-icons/lu";
 import { toast } from "react-toastify";
+import ImageGalleryPopup from "@/components/adminComponents/ImageGalleryPopup";
 
 const page = () => {
-  const [image, setImage] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [showGallery, setShowGallery] = useState(false);
   const [data, setData] = useState({
     title: "",
     description: "",
@@ -24,21 +25,25 @@ const page = () => {
     const name = event.target.name;
     const value = event.target.value;
     setData(data => ({ ...data, [name]: value }));
-    console.log(data);
   };
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
 
+    if (!selectedImage) {
+      toast.error("Por favor, selecione uma imagem de thumbnail antes de adicionar o post.");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("description", data.description);
     formData.append("category", data.category);
-    formData.append("image", image);
+    formData.append("image", selectedImage);
     formData.append("alt", data.alt || "Thumbnail blog");
     formData.append("author", data.author);
     formData.append("authorImg", data.authorImg);
-    formData.append("readingTime", data.readingTime || "5 min");
+    formData.append("readingTime", data.readingTime || "5");
     formData.append("content", data.content);
 
     try {
@@ -46,7 +51,7 @@ const page = () => {
 
       if (response.data.success) {
         toast.success(response.data.message);
-        setImage(null);
+        setSelectedImage(null);
         setData({
           title: "",
           description: "",
@@ -79,20 +84,31 @@ const page = () => {
         </p>
         <textarea name="description" onChange={onChangeHandler} value={data.description} className="w-full sm:w-[500px] mt-4 p-4 border rounded-md" type="text" placeholder="Escreva o resumo do conteúdo" minLength={70} maxLength={160} rows={2} required />
 
-        <p className="text-xl my-4">Thumbnail:</p>
-        <label htmlFor="image">
-          {!image ? (
-            <div className="bg-writingLight text-2xl flex flex-col items-center justify-center w-full sm:w-[500px] h-[200px] border border-2 border-dotted border-writingDark rounded-md">
-              <LuImagePlus className="text-6xl" />
-              <p>Upload</p>
-            </div>
-          ) : (
-            <div>
-              <Image src={URL.createObjectURL(image)} width={500} height={200} alt={data.alt} />
-            </div>
-          )}
-        </label>
-        <input onChange={(e) => setImage(e.target.files[0])} type="file" id="image" hidden required />
+        <p className="text-xl mt-4">Selecionar Imagem para Thumbnail</p>
+        <button type="button" onClick={() => setShowGallery(true)} className="bg-secondary hover:bg-primary w-64 h-12 mt-4 text-writingLight">
+          Visualizar Galeria
+        </button>
+        {selectedImage && (
+          <div className="mt-4">
+            <Image
+              src={selectedImage}
+              alt="Thumbnail selecionada"
+              width={300}
+              height={200}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        )}
+
+        {showGallery && (
+          <ImageGalleryPopup
+            onClose={() => setShowGallery(false)}
+            onSelect={(image) => {
+              setSelectedImage(image);
+              setShowGallery(false);
+            }}
+          />
+        )}
 
         <p className="text-xl mt-4">
           Descrição alternativa da thumbnail:
@@ -135,10 +151,10 @@ const page = () => {
         <textarea name="content" onChange={onChangeHandler} value={data.content} className="w-full sm:w-[500px] mt-4 p-4 border rounded-md" type="text" placeholder="Escreva o conteúdo" minLength={300} rows={10} required />
 
         <br />
-        <button type="submit" className="bg-secondary w-40 h-12 mt-8 text-writingLight">
+        <button type="submit" className="bg-secondary hover:bg-primary w-64 h-12 mt-8 text-writingLight">
           Adicionar post
         </button>
-      </form>
+      </form >
     </>
   );
 };
